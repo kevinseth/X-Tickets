@@ -21,7 +21,7 @@ public class CompanyController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Company> getCompanyById(@PathVariable String id) {
+    public Optional<Company> getCompanyById(@PathVariable Long id) {
         return companyService.getCompanyById(id);
     }
 
@@ -31,12 +31,12 @@ public class CompanyController {
     }
 
     @PutMapping("/{id}")
-    public Company updateCompany(@PathVariable String id, @RequestBody Company companyDetails) {
+    public Company updateCompany(@PathVariable Long id, @RequestBody Company companyDetails) {
         return companyService.updateCompany(id, companyDetails);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteCompany(@PathVariable String id) {
+    public void deleteCompany(@PathVariable Long id) {
         companyService.deleteCompany(id);
     }
 }

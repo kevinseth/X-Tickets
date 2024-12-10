@@ -19,21 +19,29 @@ public class EventService {
         return eventRepository.findAll();
     }
 
-    public Optional<Event> getEventById(String id) {
+    public Optional<Event> getEventById(Long id) {
         return eventRepository.findById(id);
+    }
+
+    public List<Event> getEventsByCategory(String category) {
+        return eventRepository.findEventsByCategory(category);
+    }
+
+    public Long countEventsByCategory(String category) {
+        return eventRepository.countEventsByCategory(category);
     }
 
     public Event createEvent(Event event) {
         return eventRepository.save(event);
     }
 
-    public Event updateEvent(String id, Event eventDetails) {
+    public Event updateEvent(Long id, Event eventDetails) {
         Event event = eventRepository.findById(id).orElseThrow();
         // Update event details
         return eventRepository.save(event);
     }
 
-    public void deleteEvent(String id) {
+    public void deleteEvent(Long id) {
         eventRepository.deleteById(id);
     }
 }

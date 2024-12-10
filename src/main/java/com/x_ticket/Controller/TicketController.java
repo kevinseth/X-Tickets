@@ -1,20 +1,12 @@
 package com.x_ticket.Controller;
 
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.x_ticket.Model.Ticket;
 import com.x_ticket.Service.TicketService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/tickets")
@@ -29,8 +21,18 @@ public class TicketController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Ticket> getTicketById(@PathVariable String id) {
+    public Optional<Ticket> getTicketById(@PathVariable Long id) {
         return ticketService.getTicketById(id);
+    }
+
+    @GetMapping("/eventId/{eventId}")
+    public List<Ticket> getTicketsByEventId(@PathVariable String eventId) {
+        return ticketService.getTicketsByEventId(eventId);
+    }
+
+    @GetMapping("/count-eventId/{eventId}")
+    public Long countTicketsByEventId(@PathVariable String eventId) {
+        return ticketService.countTicketsByEventId(eventId);
     }
 
     @PostMapping
@@ -39,12 +41,12 @@ public class TicketController {
     }
 
     @PutMapping("/{id}")
-    public Ticket updateTicket(@PathVariable String id, @RequestBody Ticket ticketDetails) {
+    public Ticket updateTicket(@PathVariable Long id, @RequestBody Ticket ticketDetails) {
         return ticketService.updateTicket(id, ticketDetails);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteTicket(@PathVariable String id) {
+    public void deleteTicket(@PathVariable Long id) {
         ticketService.deleteTicket(id);
     }
 }

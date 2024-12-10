@@ -1,20 +1,12 @@
 package com.x_ticket.Controller;
 
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.x_ticket.Model.Review;
 import com.x_ticket.Service.ReviewService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/reviews")
@@ -29,8 +21,18 @@ public class ReviewController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Review> getReviewById(@PathVariable String id) {
+    public Optional<Review> getReviewById(@PathVariable Long id) {
         return reviewService.getReviewById(id);
+    }
+
+    @GetMapping("/rating/{rating}")
+    public List<Review> getReviewsByRating(@PathVariable int rating) {
+        return reviewService.getReviewsByRating(rating);
+    }
+
+    @GetMapping("/count-rating/{rating}")
+    public Long countReviewsByRating(@PathVariable int rating) {
+        return reviewService.countReviewsByRating(rating);
     }
 
     @PostMapping
@@ -39,12 +41,12 @@ public class ReviewController {
     }
 
     @PutMapping("/{id}")
-    public Review updateReview(@PathVariable String id, @RequestBody Review reviewDetails) {
+    public Review updateReview(@PathVariable Long id, @RequestBody Review reviewDetails) {
         return reviewService.updateReview(id, reviewDetails);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteReview(@PathVariable String id) {
+    public void deleteReview(@PathVariable Long id) {
         reviewService.deleteReview(id);
     }
 }

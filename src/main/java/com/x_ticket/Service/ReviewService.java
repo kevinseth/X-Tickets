@@ -19,21 +19,29 @@ public class ReviewService {
         return reviewRepository.findAll();
     }
 
-    public Optional<Review> getReviewById(String id) {
+    public Optional<Review> getReviewById(Long id) {
         return reviewRepository.findById(id);
+    }
+
+    public List<Review> getReviewsByRating(int rating) {
+        return reviewRepository.findReviewsByRating(rating);
+    }
+
+    public Long countReviewsByRating(int rating) {
+        return reviewRepository.countReviewsByRating(rating);
     }
 
     public Review createReview(Review review) {
         return reviewRepository.save(review);
     }
 
-    public Review updateReview(String id, Review reviewDetails) {
+    public Review updateReview(Long id, Review reviewDetails) {
         Review review = reviewRepository.findById(id).orElseThrow();
         // Update review details
         return reviewRepository.save(review);
     }
 
-    public void deleteReview(String id) {
+    public void deleteReview(Long id) {
         reviewRepository.deleteById(id);
     }
 }
