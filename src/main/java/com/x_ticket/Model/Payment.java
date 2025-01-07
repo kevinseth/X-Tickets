@@ -13,7 +13,10 @@ public class Payment {
     private String account;
     private float amount;
     private String method;
-    private String ticketId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ticketId")
+    private Ticket ticket;
 
     @Column(columnDefinition = "timestamp default now()")
     private LocalDateTime createdAt = LocalDateTime.now();

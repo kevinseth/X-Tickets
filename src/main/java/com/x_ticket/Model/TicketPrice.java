@@ -11,7 +11,9 @@ public class TicketPrice {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    private String eventId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "eventId")
+    private Event event;
 
     @Enumerated(EnumType.STRING)
     private TicketTypeEnum type;

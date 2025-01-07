@@ -1,4 +1,4 @@
-package com.x_ticket.Controller;
+package com.x_ticket.Service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,8 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
-import javax.mail.MessagingException;
-
+import jakarta.mail.MessagingException;
 import java.time.LocalDateTime;
 
 @ControllerAdvice
@@ -20,12 +19,6 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleMessagingException(MessagingException ex, WebRequest request) {
         logger.error("MessagingException occurred: {}", ex.getMessage());
         return createErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to send email", request);
-    }
-
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<ErrorResponse> handleIllegalArgumentException(IllegalArgumentException ex, WebRequest request) {
-        logger.warn("IllegalArgumentException occurred: {}", ex.getMessage());
-        return createErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage(), request);
     }
 
     @ExceptionHandler(Exception.class)
@@ -51,6 +44,7 @@ public class GlobalExceptionHandler {
         private String message;
         private String path;
 
+        // Constructor
         public ErrorResponse(LocalDateTime timestamp, int status, String message, String path) {
             this.timestamp = timestamp;
             this.status = status;
@@ -58,7 +52,7 @@ public class GlobalExceptionHandler {
             this.path = path;
         }
 
-        // Getters and setters
+        // Getters and Setters
         public LocalDateTime getTimestamp() {
             return timestamp;
         }

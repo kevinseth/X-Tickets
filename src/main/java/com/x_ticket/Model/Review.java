@@ -1,13 +1,7 @@
 package com.x_ticket.Model;
 
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "reviews")
@@ -16,7 +10,9 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String reviewId;
 
-    private String participantId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "participantId")
+    private User participant;
 
     @Column(columnDefinition = "int default 1")
     private int rating = 1;

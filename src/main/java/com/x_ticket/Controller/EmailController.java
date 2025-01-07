@@ -1,8 +1,8 @@
 package com.x_ticket.Controller;
 
 import com.x_ticket.Model.EmailRequest;
-import com.x_ticket.Model.BulkEmailRequest;
 import com.x_ticket.Service.EmailService;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,11 +32,11 @@ public class EmailController {
     }
 
     @PostMapping("/send-bulk")
-    public ResponseEntity<String> sendBulkEmail(@RequestBody BulkEmailRequest bulkEmailRequest) {
+    public ResponseEntity<String> sendBulkEmail(@RequestBody EmailRequest emailRequest) {
         try {
-            emailService.sendBulkEmail(bulkEmailRequest.getToList(), bulkEmailRequest.getSubject(), bulkEmailRequest.getText());
-            logger.info("Bulk email sent successfully to {} recipients", bulkEmailRequest.getToList().size());
-            return ResponseEntity.ok("Bulk email sent successfully to " + bulkEmailRequest.getToList().size() + " recipients");
+            emailService.sendBulkEmail(emailRequest);
+            logger.info("Bulk email sent successfully to multiple recipients");
+            return ResponseEntity.ok("Bulk email sent successfully to multiple recipients");
         } catch (Exception e) { // Catch any other exceptions
             logger.error("Failed to send bulk email: {}", e.getMessage());
             return ResponseEntity.status(500).body("Failed to send bulk email: " + e.getMessage());
