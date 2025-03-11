@@ -19,7 +19,7 @@ public class User {
     private String password;
 
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "varchar(10) default 'USER'")
+    @Column(nullable = false)
     private UserRoleEnum role = UserRoleEnum.USER;
 
     @Column(length = 20) // Allocate 20 characters for the first name

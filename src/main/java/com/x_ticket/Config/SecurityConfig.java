@@ -15,33 +15,26 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .csrf(csrf -> csrf.disable())  // APIs typically disable CSRF
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
+                                // Allow Swagger UI and API docs access without authentication
+                                .requestMatchers("/swagger-ui.html", "/swagger-ui/**",
+                                        "/v3/api-docs/**", "/swagger-resources/**",
+                                        "/webjars/**","/api/user/register","/api/email/send").permitAll()
                                 .requestMatchers("/api/admin/**").hasRole("ADMIN")
                                 .requestMatchers("/api/protocol/**").hasRole("PROTOCOL")
                                 .requestMatchers("/api/user/**").hasRole("USER")
                                 .anyRequest().authenticated()
                 )
-                .oauth2Login(oauth2Login ->
-                        oauth2Login
-                                .loginPage("/login")
-                                .userInfoEndpoint(userInfoEndpoint ->
-                                        userInfoEndpoint.userService(oauth2UserService())
-                                )
-                                .successHandler(authenticationSuccessHandler())
-                )
-                .formLogin(formLogin ->
-                        formLogin
-                                .loginPage("/login")
-                                .permitAll()
-                )
-                .logout(logout ->
-                        logout
-                                .logoutUrl("/logout")
-                                .permitAll()
-                );
+                // Use appropriate authentication for API (JWT, OAuth2, etc.)
+                .oauth2Login(oauth2 -> oauth2.userInfoEndpoint(
+                        userInfo -> userInfo.userService(oauth2UserService())
+                ));
+
         return http.build();
     }
+
 
     @Bean
     public DefaultOAuth2UserService oauth2UserService() {
