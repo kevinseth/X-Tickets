@@ -11,10 +11,10 @@ import java.util.List;
 @Repository
 public interface CompanyRepository extends JpaRepository<Company, Long> {
     // Custom JPQL Query: Find companies by ownerId
-    @Query("SELECT c FROM Company c WHERE c.ownerId = :ownerId")
+    @Query("SELECT c FROM Company c WHERE c.owner.id = :ownerId")
     List<Company> findCompaniesByOwnerId(@Param("ownerId") String ownerId);
 
     // Custom JPQL Query: Count companies by ownerId
-    @Query("SELECT COUNT(c) FROM Company c WHERE c.ownerId = :ownerId")
+    @Query("SELECT COUNT(c) FROM Company c WHERE c.owner.id = :ownerId")
     Long countCompaniesByOwnerId(@Param("ownerId") String ownerId);
 }

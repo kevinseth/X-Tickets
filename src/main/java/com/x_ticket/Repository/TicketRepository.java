@@ -11,10 +11,10 @@ import java.util.List;
 @Repository
 public interface TicketRepository extends JpaRepository<Ticket, Long> {
     // Custom JPQL Query: Find tickets by eventId
-    @Query("SELECT t FROM Ticket t WHERE t.eventId = :eventId")
+    @Query("SELECT t FROM Ticket t WHERE t.event.id = :eventId")
     List<Ticket> findTicketsByEventId(@Param("eventId") String eventId);
 
     // Custom JPQL Query: Count tickets by eventId
-    @Query("SELECT COUNT(t) FROM Ticket t WHERE t.eventId = :eventId")
+    @Query("SELECT COUNT(t) FROM Ticket t WHERE t.event.id = :eventId")
     Long countTicketsByEventId(@Param("eventId") String eventId);
 }

@@ -31,7 +31,7 @@ public class Ticket {
     private TicketTypeEnum ticketType = TicketTypeEnum.GENERAL;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "eventId")
+    @JoinColumn(name = "eventId", referencedColumnName = "id")
     private Event event;
 
     @ManyToOne(fetch = FetchType.LAZY)

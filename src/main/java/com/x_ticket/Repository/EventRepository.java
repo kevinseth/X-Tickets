@@ -11,10 +11,10 @@ import java.util.List;
 @Repository
 public interface EventRepository extends JpaRepository<Event, Long> {
     // Custom JPQL Query: Find events by category
-    @Query("SELECT e FROM Event e WHERE e.category = :category")
+    @Query("SELECT e FROM Event e WHERE e.eventCategory = :category")
     List<Event> findEventsByCategory(@Param("category") String category);
 
     // Custom JPQL Query: Count events by category
-    @Query("SELECT COUNT(e) FROM Event e WHERE e.category = :category")
+    @Query("SELECT COUNT(e) FROM Event e WHERE e.eventCategory = :category")
     Long countEventsByCategory(@Param("category") String category);
 }
